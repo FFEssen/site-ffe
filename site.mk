@@ -21,6 +21,8 @@ GLUON_SITE_PACKAGES := \
         gluon-next-node \
         gluon-mesh-vpn-fastd \
         gluon-radvd \
+        gluon-respondd \
+        gluon-setup-mode \
         gluon-status-page \
         iwinfo \
         iptables \
