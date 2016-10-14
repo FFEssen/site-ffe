@@ -17,7 +17,7 @@ Interessed to read and learn how to build our firmware to joind the mesh network
      ----- link howto build the firmware -----
 <hr>
 
-## Community, discussion, contribution, and support
+## Community, discussion, and contribution
 
 ### Meeting
 Link to Webseite... and some informations about Freifunk-Treffen.
