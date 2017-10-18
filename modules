@@ -1,0 +1,5 @@
+GLUON_SITE_FEEDS='ffe'
+
+PACKAGES_FFE_REPO=https://github.com/ffessen/packages
+PACKAGES_FFE_BRANCH=7.1.2
+PACKAGES_FFE_COMMIT=fbe62096d8abb51f4dccea5b7f356ff4ea44bb95
