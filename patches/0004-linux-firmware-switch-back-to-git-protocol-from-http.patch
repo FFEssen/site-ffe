@@ -1,0 +1,51 @@
+From 60b4830c51f1defbae0b19bff0bed549426fd6a2 Mon Sep 17 00:00:00 2001
+From: Matthias Schiffer <mschiffer@universe-factory.net>
+Date: Thu, 10 Nov 2016 03:28:06 +0100
+Subject: [PATCH] linux-firmware: switch back to git protocol from https for
+ download
+
+Using HTTPS breaks the download on Debian Wheezy. The switch was an
+unintended side effect of the backport from LEDE.
+
+Also, fix the commit message of the backport patch (mwlwifi is not updated
+anymore since the last OpenWrt base upgrade).
+
+Fixes #919
+---
+ patches/openwrt/0007-mac80211-hostapd-iw-.-update.patch | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/patches/openwrt/0007-mac80211-hostapd-iw-.-update.patch b/patches/openwrt/0007-mac80211-hostapd-iw-.-update.patch
+index ef8c2b7..59103f8 100644
+--- a/patches/openwrt/0007-mac80211-hostapd-iw-.-update.patch
++++ b/patches/openwrt/0007-mac80211-hostapd-iw-.-update.patch
+@@ -16,7 +16,6 @@ LEDE 42f559ed70897a7b74dd3e6293b42e6d2e511eaa:
+ * iw
+ * linux-firmware
+ * mt76
+-* mwlwifi
+ 
+ diff --git a/package/firmware/ath10k-firmware/Makefile b/package/firmware/ath10k-firmware/Makefile
+ index b03d644..624da6a 100644
+@@ -271,16 +270,14 @@ index b03d644..624da6a 100644
+ +$(eval $(call BuildPackage,ath10k-firmware-qca99x0-ct))
+ +$(eval $(call BuildPackage,ath10k-firmware-qca9984-ct))
+ diff --git a/package/firmware/linux-firmware/Makefile b/package/firmware/linux-firmware/Makefile
+-index 2fcd93b..7a2e977 100644
++index 2fcd93b..ae5894c 100644
+ --- a/package/firmware/linux-firmware/Makefile
+ +++ b/package/firmware/linux-firmware/Makefile
+-@@ -16,10 +16,10 @@ PKG_SOURCE_PROTO:=git
+- PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
++@@ -17,9 +17,9 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+  PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
+  PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)
+--PKG_SOURCE_URL:=git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
++ PKG_SOURCE_URL:=git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+ -PKG_MIRROR_MD5SUM:=ca4d289ad9380471cae376fc7dd3660a
+-+PKG_SOURCE_URL:=https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+ +PKG_MIRROR_MD5SUM:=8d44332359de89b1936b4ff608a72614
+  
+ -PKG_MAINTAINER:=Felix Fietkau <nbd@openwrt.org>
+-- 
+2.9.3

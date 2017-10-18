@@ -1,0 +1,65 @@
+From: CodeFetch <me@bibbl.com>
+commit 5ef3d883a5ba9a08dc658821619ab7c48911df9f
+Author: Matthias Schiffer <mschiffer@universe-factory.net>
+Date:   Fri Nov 11 03:45:49 2016 +0100
+
+    ar71xx-generic: backport region code support for TP-Link TL-WR841ND v11
+
+diff --git a/patches/openwrt/0076-ar71xx-generate-region-coded-factory-images-for-TP-Link-TL-WR841ND-v11.patch b/patches/openwrt/0076-ar71xx-generate-region-coded-factory-images-for-TP-Link-TL-WR841ND-v11.patch
+new file mode 100644
+index 0000000..51b1e00
+--- /dev/null
++++ b/patches/openwrt/0076-ar71xx-generate-region-coded-factory-images-for-TP-Link-TL-WR841ND-v11.patch
+@@ -0,0 +1,26 @@
++From: Matthias Schiffer <mschiffer@universe-factory.net>
++Date: Fri, 11 Nov 2016 03:29:59 +0100
++Subject: ar71xx: generate region-coded factory images for TP-Link TL-WR841ND v11
++
++The latest stock firmwares for US and EU regions have started checking the
++region code.
++
++Tested-by: Andreas Ziegler <ml@andreas-ziegler.de>
++Signed-off-by: Matthias Schiffer <mschiffer@universe-factory.net>
++
++Backport of LEDE 9cac5e8be014b89326880ae5d7b885013614e0ca
++
++diff --git a/target/linux/ar71xx/image/Makefile b/target/linux/ar71xx/image/Makefile
++index 9ac1d60..6346eb9 100644
++--- a/target/linux/ar71xx/image/Makefile
+++++ b/target/linux/ar71xx/image/Makefile
++@@ -602,6 +602,9 @@ define Device/tl-wr841n-v11
++     BOARDNAME := TL-WR841N-v11
++     DEVICE_PROFILE := TLWR841
++     TPLINK_HWID := 0x08410011
+++    IMAGES += factory-us.bin factory-eu.bin
+++    IMAGE/factory-us.bin := append-rootfs | mktplinkfw factory -C US
+++    IMAGE/factory-eu.bin := append-rootfs | mktplinkfw factory -C EU
++ endef
++ 
++ define Device/tl-wr842n-v2
+diff --git a/targets/ar71xx-generic/profiles.mk b/targets/ar71xx-generic/profiles.mk
+index 416a4eb..f626029 100644
+--- a/targets/ar71xx-generic/profiles.mk
++++ b/targets/ar71xx-generic/profiles.mk
+@@ -70,7 +70,7 @@ ifneq ($(BROKEN),)
+ $(eval $(call GluonModel,TLWA801,tl-wa801nd-v3,tp-link-tl-wa801n-nd-v3)) # BROKEN: untested
+ endif
+ 
+-# TL-WR841N/ND v3, v5, v7, v8, v9, v10, v11
++# TL-WR841N/ND v3, v5, v7, v8, v9, v10
+ $(eval $(call GluonProfile,TLWR841))
+ $(eval $(call GluonModel,TLWR841,tl-wr841nd-v3,tp-link-tl-wr841n-nd-v3))
+ $(eval $(call GluonModel,TLWR841,tl-wr841nd-v5,tp-link-tl-wr841n-nd-v5))
+@@ -78,7 +78,11 @@ $(eval $(call GluonModel,TLWR841,tl-wr841nd-v7,tp-link-tl-wr841n-nd-v7))
+ $(eval $(call GluonModel,TLWR841,tl-wr841n-v8,tp-link-tl-wr841n-nd-v8))
+ $(eval $(call GluonModel,TLWR841,tl-wr841n-v9,tp-link-tl-wr841n-nd-v9))
+ $(eval $(call GluonModel,TLWR841,tl-wr841n-v10,tp-link-tl-wr841n-nd-v10))
+-$(eval $(call GluonModel,TLWR841,tl-wr841n-v11,tp-link-tl-wr841n-nd-v11))
++
++# TL-WR841N/ND v11
++$(eval $(call GluonProfile,TLWR841_REGION,,TLWR841))
++$(eval $(call GluonModel,TLWR841_REGION,tl-wr841n-v11,tp-link-tl-wr841n-nd-v11))
++$(eval $(call GluonProfileFactorySuffix,TLWR841_REGION,-squashfs-factory$(if $(GLUON_REGION),-$(GLUON_REGION)),.bin))
+ 
+ # TL-WR842N/ND v1, v2
+ $(eval $(call GluonProfile,TLWR842))
