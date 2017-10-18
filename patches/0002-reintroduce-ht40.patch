@@ -1,5 +1,5 @@
-From: CodeFetch <me@bibbl.com>
-Date: Tue, 11 Oct 2016 09:06:22 +0200
+From: Vincent Wiemann <me@bibbl.com>
+Date: Tue, 17 Oct 2017 10:04:46 +0200
 Subject: [PATCH] Reintroduce HT40
 
 Adds the site.conf option to set the HT mode.
@@ -9,22 +9,22 @@ Adds the site.conf option to set the HT mode.
  2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/package/gluon-core/check_site.lua b/package/gluon-core/check_site.lua
-index 480b367..1cb2b5d 100644
+index d26b1671..20f29932 100644
 --- a/package/gluon-core/check_site.lua
 +++ b/package/gluon-core/check_site.lua
 @@ -27,6 +27,7 @@ for _, config in ipairs({'wifi24', 'wifi5'}) do
-     need_string('regdom') -- regdom is only required when wifi24 or wifi5 is configured
+ 		need_string('regdom') -- regdom is only required when wifi24 or wifi5 is configured
  
-     need_number(config .. '.channel')
-+    need_string(config .. '.htmode')
+ 		need_number(config .. '.channel')
++		need_string(config .. '.htmode')
  
-     local rates = {1000, 2000, 5500, 6000, 9000, 11000, 12000, 18000, 24000, 36000, 48000, 54000}
-     local supported_rates = need_array_of(config .. '.supported_rates', rates, false)
+ 		local rates = {1000, 2000, 5500, 6000, 9000, 11000, 12000, 18000, 24000, 36000, 48000, 54000}
+ 		local supported_rates = need_array_of(config .. '.supported_rates', rates, false)
 diff --git a/package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless b/package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless
-index 6e80957..2c88579 100755
+index ba844950..a054a324 100755
 --- a/package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless
 +++ b/package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless
-@@ -157,7 +157,7 @@ local function configure_radio(radio, index, config)
+@@ -160,7 +160,7 @@ local function configure_radio(radio, index, config)
    uci:delete('wireless', radio, 'disabled')
  
    uci:set('wireless', radio, 'channel', channel)
@@ -34,4 +34,5 @@ index 6e80957..2c88579 100755
  
    if config.supported_rates then
 -- 
-2.9.3
+2.14.2
+

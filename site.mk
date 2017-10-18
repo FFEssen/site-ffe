@@ -1,34 +1,31 @@
 GLUON_SITE_PACKAGES := \
-        gluon-mesh-batman-adv-15 \
-        gluon-alfred \
-        gluon-autoupdater \
-        gluon-config-mode-core \
-        gluon-config-mode-autoupdater \
-        gluon-config-mode-hostname \
-        gluon-config-mode-mesh-vpn \
-        gluon-config-mode-geo-location \
-        gluon-config-mode-contact-info \
-        gluon-ebtables-filter-multicast \
-        gluon-ebtables-filter-ra-dhcp \
-        gluon-luci-admin \
-        gluon-luci-autoupdater \
-        gluon-luci-mesh-vpn-fastd \
-        gluon-luci-portconfig \
-        gluon-luci-private-wifi \
-        gluon-luci-wifi-config \
-        gluon-next-node \
-        gluon-mesh-vpn-fastd \
-        gluon-radvd \
-        gluon-respondd \
-	ffe-ath9k-blackout-workaround \
-	ffe-wifi-blackout-workaround \
+	gluon-mesh-batman-adv-15 \
+	gluon-alfred \
+	gluon-respondd \
+	gluon-autoupdater \
+	gluon-config-mode-autoupdater \
+	gluon-config-mode-contact-info \
+	gluon-config-mode-core \
+	gluon-config-mode-geo-location \
+	gluon-config-mode-hostname \
+	gluon-config-mode-mesh-vpn \
+	gluon-ebtables-filter-multicast \
+	gluon-ebtables-filter-ra-dhcp \
+	gluon-web-admin \
+	gluon-web-autoupdater \
+	gluon-web-mesh-vpn-fastd \
+	gluon-web-network \
+	gluon-web-private-wifi \
+	gluon-web-wifi-config \
+	gluon-mesh-vpn-fastd \
+	gluon-radvd \
+	gluon-setup-mode \
+	gluon-status-page \
+	micrond \
 	ffe-autoupdater-wifi-fallback \
-	ffe-respondd-workaround \
-        gluon-setup-mode \
-        gluon-status-page \
-        iwinfo \
-        iptables \
-        haveged
+	iwinfo \
+	iptables \
+	haveged
 	
 	
 
@@ -45,13 +42,14 @@ GLUON_SITE_PACKAGES += \
 	kmod-r8169
 endif
 
-DEFAULT_GLUON_RELEASE := 2.2.1-1
+DEFAULT_GLUON_RELEASE := 3.1.3-1
 
 # Allow overriding the release number from the command line
 GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
-
+GLUON_REGION ?= eu
+export GLUON_REGION
 GLUON_PRIORITY ?= 0
-GLUON_BRANCH ?= stable
+GLUON_BRANCH ?= experimental
 export GLUON_BRANCH
 
 GLUON_TARGET ?= ar71xx-generic
