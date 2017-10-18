@@ -42,17 +42,16 @@ GLUON_SITE_PACKAGES += \
 	kmod-r8169
 endif
 
-DEFAULT_GLUON_RELEASE := 3.1.3-1
+DEFAULT_GLUON_RELEASE := 3.1.3-2
 
 # Allow overriding the release number from the command line
 GLUON_RELEASE ?= $(DEFAULT_GLUON_RELEASE)
-GLUON_REGION ?= eu
-export GLUON_REGION
+
 GLUON_PRIORITY ?= 0
-GLUON_BRANCH ?= experimental
+GLUON_BRANCH ?= beta
 export GLUON_BRANCH
 
-GLUON_TARGET ?= ar71xx-generic
+GLUON_TARGET ?= ar71xx-tiny
 export GLUON_TARGET
 
 GLUON_LANGS ?= en de
