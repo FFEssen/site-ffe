@@ -1,5 +1,9 @@
-GLUON_SITE_FEEDS='ffe'
+GLUON_SITE_FEEDS='ffe ffho'
 
 PACKAGES_FFE_REPO=https://github.com/ffessen/packages
 PACKAGES_FFE_BRANCH=3.1.3
 PACKAGES_FFE_COMMIT=50e0ad7bf90b6507240f074d67c414b30cd46ff1
+
+PACKAGES_FFHO_REPO=https://git.ffho.net/FreifunkHochstift/ffho-packages.git
+PACKAGES_FFHO_BRANCH=master
+PACKAGES_FFHO_COMMIT=a2521ef8cd6774a0470a7b2568d0240e679e95e7

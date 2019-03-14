@@ -1,0 +1,67 @@
+From d1415b34313985d4d7de97811625f441635cc639 Mon Sep 17 00:00:00 2001
+From: Vincent Wiemann <vincent.wiemann@ironai.com>
+Date: Wed, 13 Mar 2019 19:44:16 +0100
+Subject: [PATCH] Reintroduce HT40
+
+Adds the site.conf options to set the HT/VHT mode.
+---
+ package/gluon-core/check_site.lua                        | 6 ++++++
+ package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless | 8 ++++----
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/package/gluon-core/check_site.lua b/package/gluon-core/check_site.lua
+index ede64cd..49b1030 100644
+--- a/package/gluon-core/check_site.lua
++++ b/package/gluon-core/check_site.lua
+@@ -33,6 +33,7 @@ for _, config in ipairs({'wifi24', 'wifi5'}) do
+ 		need_string(in_site({'regdom'})) -- regdom is only required when wifi24 or wifi5 is configured
+ 
+ 		need_number({config, 'channel'})
++		need_string({config, 'htmode'})
+ 
+ 		local rates = {1000, 2000, 5500, 6000, 9000, 11000, 12000, 18000, 24000, 36000, 48000, 54000}
+ 		local supported_rates = need_array_of(in_site({config, 'supported_rates'}), rates, false)
+@@ -54,6 +55,11 @@ for _, config in ipairs({'wifi24', 'wifi5'}) do
+ 	end
+ end
+ 
++if need_table({'wifi5'}, nil, false) then
++	need_string({'wifi5', 'vhtmode'})
++end
++
++
+ need_boolean(in_site({'poe_passthrough'}), false)
+ 
+ if need_table({'dns'}, nil, false) then
+diff --git a/package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless b/package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless
+index e4c252b..82a49ea 100755
+--- a/package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless
++++ b/package/gluon-core/luasrc/lib/gluon/upgrade/200-wireless
+@@ -58,12 +58,12 @@ local function get_channel(radio, config)
+ 	return channel or config.channel()
+ end
+ 
+-local function get_htmode(radio)
++local function get_htmode(radio, config)
+        local phy = util.find_phy(radio)
+        if iwinfo.nl80211.hwmodelist(phy).ac then
+-               return 'VHT20'
++               return config.vhtmode
+        else
+-               return 'HT20'
++               return config.htmode
+        end
+ end
+ 
+@@ -199,7 +199,7 @@ util.foreach_radio(uci, function(radio, index, config)
+ 	end
+ 
+ 	local channel = get_channel(radio, config)
+-	local htmode = get_htmode(radio)
++	local htmode = get_htmode(radio, config)
+ 
+ 	uci:delete('wireless', radio_name, 'disabled')
+ 
+-- 
+2.1.4
+
