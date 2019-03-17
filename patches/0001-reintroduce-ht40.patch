@@ -46,10 +46,10 @@ index e4c252b..82a49ea 100755
         local phy = util.find_phy(radio)
         if iwinfo.nl80211.hwmodelist(phy).ac then
 -               return 'VHT20'
-+               return config.vhtmode
++               return config.vhtmode()
         else
 -               return 'HT20'
-+               return config.htmode
++               return config.htmode()
         end
  end
  
